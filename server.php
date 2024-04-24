@@ -13,6 +13,8 @@ $server->on('open', function (Server $server, $request) {
 // Evento de mensagem
 $server->on('message', function (Server $server, $frame) {
     echo "Mensagem recebida: {$frame->data}\n";
+    $conexoes = $server->connections;
+    
     // Envie a mensagem de volta para o cliente
     $server->push($frame->fd, json_encode(['type' => 'chat', 'message' => "{$frame->data}"]));
 });
