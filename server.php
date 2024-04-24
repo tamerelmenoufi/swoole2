@@ -11,10 +11,10 @@ $server->on('open', function (Server $server, $request) {
     //echo "Nova conexão: {$request->fd}\n";
 });
 
-$server->set([
-    'ssl_cert_file' => __DIR__.'/crt/certificate.crt',
-    'ssl_key_file' => __DIR__.'/crt/private.key',
-]);
+// $server->set([
+//     'ssl_cert_file' => __DIR__.'/crt/certificate.crt',
+//     'ssl_key_file' => __DIR__.'/crt/private.key',
+// ]);
 
 // Evento de mensagem
 $server->on('message', function (Server $server, $frame) {
