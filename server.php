@@ -3,7 +3,7 @@
 use Swoole\WebSocket\Server;
 
 // Crie um novo servidor WebSocket
-$server = new Server('0.0.0.0', 9501); //, SWOOLE_PROCESS, SWOOLE_SOCK_TCP | SWOOLE_SSL
+$server = new Server('0.0.0.0', 9501, SWOOLE_PROCESS, SWOOLE_SOCK_TCP | SWOOLE_SSL);
 
 
 // Evento de conexão
@@ -11,10 +11,10 @@ $server->on('open', function (Server $server, $request) {
     //echo "Nova conexão: {$request->fd}\n";
 });
 
-// $server->set([
-//     'ssl_cert_file' => '/app/crt/certificate.crt',
-//     'ssl_key_file' => '/app/crt/private.key',
-// ]);
+$server->set([
+    'ssl_cert_file' => __DIR__.'/crt/certificate.crt',
+    'ssl_key_file' => __DIR__.'/crt/private.key',
+]);
 
 // Evento de mensagem
 $server->on('message', function (Server $server, $frame) {
