@@ -5,6 +5,12 @@ use Swoole\WebSocket\Server;
 // Crie um novo servidor WebSocket
 $server = new Server('0.0.0.0', 9501);
 
+// Configurações do SSL
+$server->set([
+    'ssl_cert_file' => __DIR__.'/crt/certificate.crt', // Caminho para o arquivo de certificado SSL
+    'ssl_key_file' => __DIR__.'/crt/private.key', // Caminho para o arquivo de chave privada
+]);
+
 
 // Evento de conexão
 $server->on('open', function (Server $server, $request) {
