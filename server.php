@@ -14,7 +14,7 @@ $server->on('open', function (Server $server, $request) {
 $server->on('message', function (Server $server, $frame) {
     echo "Mensagem recebida: {$frame->data}\n";
     // Envie a mensagem de volta para o cliente
-    $server->push($frame->fd, "Você disse: {$frame->data}");
+    $server->push($frame->fd, json_encode(['type' => 'chat', 'message' => "{$frame->data}"]));
 });
 
 // Evento de fechamento da conexão
