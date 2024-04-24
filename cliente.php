@@ -11,7 +11,7 @@
     <input type="text" />
 
     <script>
-        const ws = new WebSocket("ws://localhost/");
+        const ws = new WebSocket("206.81.10.165:9501");
         const input = document.querySelector('input');
         const output = document.querySelector('output');
 
