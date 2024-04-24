@@ -12,8 +12,8 @@ $server->on('open', function (Server $server, $request) {
 });
 
 $server->set([
-    'ssl_cert_file' => 'crt/certificate.crt',
-    'ssl_key_file' => 'crt/private.key',
+    'ssl_cert_file' => '/app/crt/certificate.crt',
+    'ssl_key_file' => '/app/crt/private.key',
 ]);
 
 // Evento de mensagem
