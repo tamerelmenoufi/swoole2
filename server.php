@@ -22,10 +22,5 @@ $server->on('message', function (Server $server, Frame $mensagem) {
     
 });
 
-// Evento de fechamento da conexão
-$server->on('close', function (Server $server, $fd) {
-    echo "Conexão fechada: $fd\n";
-});
-
 // Inicie o servidor
 $server->start();
