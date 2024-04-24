@@ -1,20 +1,25 @@
 <?php
 
+use Swoole\WebSocket\Frame;
 use Swoole\WebSocket\Server;
 
 // Crie um novo servidor WebSocket
 $server = new Server('0.0.0.0', 9501);
 
-// Evento de conexão
-$server->on('open', function (Server $server, $request) {
-    echo "Nova conexão: {$request->fd}\n";
-});
-
 // Evento de mensagem
-$server->on('message', function (Server $server, $frame) {
-    echo "Mensagem recebida: {$frame->data}\n";
-    // Envie a mensagem de volta para o cliente
-    $server->push($frame->fd, "Você disse: {$frame->data}");
+$server->on('message', function (Server $server, Frame $mensagem) {
+    /** @var \Swoolw\Connection\Iterator $conexoes */
+    $conexoes = $server->connections;
+    $origem = $mensagem->fd;
+
+    foreach($conexoes as $conexao){
+        if($conexao === $origem) continue;
+        $server->push(
+            $conexao,
+            json_encode(['type' => 'chat', 'text' => $mensagem->data])
+        );
+    }
+    
 });
 
 // Evento de fechamento da conexão
