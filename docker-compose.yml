@@ -1,0 +1,10 @@
+version: '3'
+services:
+  swoole-server:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "9501:9501"
+    volumes:
+      - .:/app
