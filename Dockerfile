@@ -4,6 +4,7 @@ RUN pecl install swoole && docker-php-ext-enable swoole
 
 WORKDIR /app
 
-COPY . .
+COPY server.php .
+COPY ./crt/* .
 
 CMD [ "php", "server.php" ]
