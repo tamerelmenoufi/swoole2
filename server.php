@@ -1,6 +1,6 @@
 <?php
 // Criar um servidor TCP
-$server = new Swoole\Server("127.0.0.1", 9501);
+$server = new Swoole\Server("206.81.10.165", 9501);
 
 // Configurações do servidor
 $server->set([
