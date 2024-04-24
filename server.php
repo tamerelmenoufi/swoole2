@@ -1,20 +1,9 @@
 <?php
 
-use Swoole\Http\Request;
-use Swoole\Http\Response;
-use Swoole\Http\Server;
-
-// use Swoole\WebSocket\Server;
+use Swoole\WebSocket\Server;
 
 // // Crie um novo servidor WebSocket
 $server = new Server('0.0.0.0', 9501);
-
-
-
-
-// Create an HTTP server
-// $server = new Server("0.0.0.0", 9501, SWOOLE_PROCESS, SWOOLE_SOCK_TCP | SWOOLE_SSL);
-
 
 
 // Configurações do SSL
