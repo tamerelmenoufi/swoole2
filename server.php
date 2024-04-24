@@ -1,30 +1,26 @@
 <?php
-// Criar um servidor TCP
-$server = new Swoole\Server("0.0.0.0", 9501);
 
-// Configurações do servidor
-$server->set([
-    'worker_num' => 4, // Número de processos trabalhadores
-]);
+use Swoole\WebSocket\Server;
 
-// Evento para lidar com conexões recebidas
-$server->on('connect', function ($server, $fd) {
-    echo "Cliente conectado: $fd\n";
+// Crie um novo servidor WebSocket
+$server = new Server('0.0.0.0', 9501);
+
+// Evento de conexão
+$server->on('open', function (Server $server, $request) {
+    echo "Nova conexão: {$request->fd}\n";
 });
 
-// Evento para lidar com dados recebidos
-$server->on('receive', function ($server, $fd, $from_id, $data) {
-    echo "Recebido dados do cliente $fd: $data\n";
-    
-    // Enviar de volta os dados recebidos para o cliente
-    $server->send($fd, "Você enviou: $data");
+// Evento de mensagem
+$server->on('message', function (Server $server, $frame) {
+    echo "Mensagem recebida: {$frame->data}\n";
+    // Envie a mensagem de volta para o cliente
+    $server->push($frame->fd, "Você disse: {$frame->data}");
 });
 
-// Evento para lidar com a desconexão de um cliente
-$server->on('close', function ($server, $fd) {
-    echo "Cliente desconectado: $fd\n";
+// Evento de fechamento da conexão
+$server->on('close', function (Server $server, $fd) {
+    echo "Conexão fechada: $fd\n";
 });
 
-// Iniciar o servidor
-echo "Servidor iniciado...\n";
+// Inicie o servidor
 $server->start();
