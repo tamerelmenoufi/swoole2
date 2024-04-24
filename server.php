@@ -3,7 +3,7 @@
 use Swoole\WebSocket\Server;
 
 // Crie um novo servidor WebSocket
-$server = new Server('0.0.0.0', 9501, SWOOLE_PROCESS, SWOOLE_SOCK_TCP | SWOOLE_SSL);
+$server = new Server('0.0.0.0', 9501, SWOOLE_SOCK_TCP | SWOOLE_SSL);
 
 
 // Evento de conexão
