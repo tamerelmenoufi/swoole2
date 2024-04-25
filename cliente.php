@@ -7,11 +7,11 @@
 </head>
 <body>
     <output></output>
-    <input></input>
     <input type="text" />
 
     <script>
-        const ws = new WebSocket("206.81.10.165:9501");
+        // const ws = new WebSocket("ws://206.81.10.165:9501");
+        const ws = new WebSocket("wss://ws.capitalsolucoesam.com.br/");
         const input = document.querySelector('input');
         const output = document.querySelector('output');
 
@@ -26,10 +26,10 @@
         });
 
 
-        ws.addEventListener('keypress', e => {
+        input.addEventListener('keypress', e => {
             if(e.code === 'Enter'){
                 const valor = input.value;
-                output.append('Eu: ' + dados.text, document.createElement('br'));
+                output.append('Eu: ' + valor, document.createElement('br'));
                 ws.send(valor);
                 input.value = '';
             }
