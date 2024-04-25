@@ -24,7 +24,7 @@ $server->on('message', function (Server $server, $frame) {
     $conexoes = $server->connections;
     $origem = $frame->fd;
 
-    $content = http_build_query(["idChat" => $frame->fd]);
+    $content = http_build_query(["idChat" => $frame->fd, "text" => $frame->data]);
               
     $context = stream_context_create(array(
         'http' => array(
