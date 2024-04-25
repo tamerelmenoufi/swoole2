@@ -3,8 +3,7 @@
 use Swoole\WebSocket\Server;
 
 // // Crie um novo servidor WebSocket
-$server = new Server('0.0.0.0', 9501);
-
+$server = new Server("0.0.0.0", 9501);
 
 // Configurações do SSL
 $server->set([
