@@ -24,10 +24,21 @@ $server->on('message', function (Server $server, $frame) {
     $conexoes = $server->connections;
     $origem = $frame->fd;
 
+    $content = http_build_query(["idChat" => $frame->fd]);
+              
+    $context = stream_context_create(array(
+        'http' => array(
+            'method'  => 'POST',
+            'content' => $content,
+        )
+    ));
+    
+    $result = file_get_contents('https://cron.capitalsolucoesam.com.br/wapp_chat.php', null, $context);
+
     foreach($conexoes as $conxao){
         // Envie a mensagem de volta para o cliente
         if($conxao == $origem) continue;
-        $server->push($conxao, json_encode(['type' => 'chat', 'text' => $frame->data]));
+        $server->push($conxao, $result);
     }
 });
 
