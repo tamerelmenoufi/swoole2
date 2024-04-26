@@ -52,10 +52,27 @@ $server->on('close', function (Server $server, $fd) {
 // Lógica para processar eventos da fila
 function processarFila($server) {
     // Aqui você pode acessar o objeto do servidor Swoole e enviar mensagens para os clientes conectados
-    $mensagem = 'Nova mensagem da fila';
-    foreach ($server->connections as $fd) {
-        $server->push($fd, $mensagem);
+
+    $conexoes = $server->connections;
+    $origem = $frame->fd;
+
+    $content = http_build_query(["idChat" => $frame->fd, "text" => 'update']);
+              
+    $context = stream_context_create(array(
+        'http' => array(
+            'method'  => 'POST',
+            'content' => $content,
+        )
+    ));
+    
+    $result = file_get_contents('https://cron.capitalsolucoesam.com.br/wapp_chat.php', null, $context);
+
+    foreach($conexoes as $conxao){
+        // Envie a mensagem de volta para o cliente
+        if($conxao == $origem) $server->push($conxao, $result);
     }
+
+
 }
 
 // Loop para verificar periodicamente a fila
