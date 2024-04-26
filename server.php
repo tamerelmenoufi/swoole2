@@ -50,11 +50,10 @@ $server->on('close', function (Server $server, $fd) {
 
 
 // Lógica para processar eventos da fila
-function processarFila($server, $frame) {
+function processarFila($server) {
     // Aqui você pode acessar o objeto do servidor Swoole e enviar mensagens para os clientes conectados
 
     $conexoes = $server->connections;
-    $origem = $frame->fd;
 
     $content = http_build_query(["idChat" => $frame->fd, "text" => 'update']);
               
@@ -69,15 +68,15 @@ function processarFila($server, $frame) {
 
     foreach($conexoes as $conxao){
         // Envie a mensagem de volta para o cliente
-        if($conxao == $origem) $server->push($conxao, $result);
+        $server->push($conxao, $result);
     }
 
 
 }
 
 // Loop para verificar periodicamente a fila
-swoole_timer_tick(1000, function () use ($server, $frame) {
-    processarFila($server, $frame);
+swoole_timer_tick(1000, function () use ($server) {
+    processarFila($server);
 });
 
 
