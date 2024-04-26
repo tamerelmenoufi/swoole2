@@ -50,7 +50,7 @@ $server->on('close', function (Server $server, $fd) {
 
 
 // Lógica para processar eventos da fila
-function processarFila($server) {
+function processarFila($server, $frame) {
     // Aqui você pode acessar o objeto do servidor Swoole e enviar mensagens para os clientes conectados
 
     $conexoes = $server->connections;
@@ -76,8 +76,8 @@ function processarFila($server) {
 }
 
 // Loop para verificar periodicamente a fila
-swoole_timer_tick(1000, function () use ($server) {
-    processarFila($server);
+swoole_timer_tick(1000, function () use ($server, $frame) {
+    processarFila($server, $frame);
 });
 
 
