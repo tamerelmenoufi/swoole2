@@ -47,5 +47,22 @@ $server->on('close', function (Server $server, $fd) {
     echo "Conexão fechada: $fd\n";
 });
 
+
+
+// Lógica para processar eventos da fila
+function processarFila($server) {
+    // Aqui você pode acessar o objeto do servidor Swoole e enviar mensagens para os clientes conectados
+    $mensagem = 'Nova mensagem da fila';
+    foreach ($server->connections as $fd) {
+        $server->push($fd, $mensagem);
+    }
+}
+
+// Loop para verificar periodicamente a fila
+swoole_timer_tick(1000, function () use ($server) {
+    processarFila($server);
+});
+
+
 // Inicie o servidor
 $server->start();
